@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VR Playground – India's Trusted Playground Experts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFD93D;
+      --orange: #FF6B35;
+      --green: #06D6A0;
+      --blue: #118AB2;
+      --purple: #9B5DE5;
+      --red: #EF476F;
+      --dark: #1a1a2e;
+      --light: #FFFDF7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--light);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #fff;
+      border-bottom: 4px solid var(--yellow);
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: var(--orange);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-logo span { color: var(--blue); }
+
+    nav ul {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      background: var(--yellow);
+      color: var(--dark);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* floating shapes */
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.15;
+    }
+    .s1 { width: 300px; height: 300px; background: var(--yellow); top: -80px; left: -80px; animation-delay: 0s; }
+    .s2 { width: 200px; height: 200px; background: var(--green); bottom: 10%; right: 5%; animation-delay: 1.5s; }
+    .s3 { width: 150px; height: 150px; background: var(--purple); top: 30%; left: 5%; animation-delay: 3s; }
+    .s4 { width: 100px; height: 100px; background: var(--red); bottom: 20%; left: 40%; animation-delay: 2s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 760px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--dark);
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 0.35rem 1.2rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    #hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+
+    #hero h1 .highlight { color: var(--yellow); }
+
+    #hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      box-shadow: 0 8px 25px rgba(255,107,53,0.45);
+    }
+
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(255,107,53,0.5); }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+
+    .btn-outline:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Fredoka One', cursive; font-size: 2.5rem; color: var(--yellow); display: block; }
+    .stat-label { color: rgba(255,255,255,0.6); font-size: 0.9rem; font-weight: 600; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 2rem; }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      max-width: 560px;
+      color: #666;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: #fff;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-main-box {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      font-size: 7rem;
+      box-shadow: 0 20px 60px rgba(17,138,178,0.3);
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--yellow);
+      border-radius: 20px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .about-badge strong { font-family: 'Fredoka One', cursive; font-size: 2rem; color: var(--dark); display: block; }
+    .about-badge span { font-size: 0.85rem; font-weight: 700; color: #555; }
+
+    .about-list {
+      list-style: none;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #444;
+    }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── PRODUCTS ── */
+    #products {
+      background: #F4F7FF;
+    }
+
+    .products-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .products-header .section-sub { margin: 0 auto; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .product-card:nth-child(1)::before { background: var(--orange); }
+    .product-card:nth-child(2)::before { background: var(--blue); }
+    .product-card:nth-child(3)::before { background: var(--green); }
+    .product-card:nth-child(4)::before { background: var(--purple); }
+    .product-card:nth-child(5)::before { background: var(--red); }
+    .product-card:nth-child(6)::before { background: var(--yellow); }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.13);
+    }
+
+    .product-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+    .product-card h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card p { color: #666; font-size: 0.95rem; line-height: 1.6; }
+
+    .product-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.25rem 0.85rem;
+      background: #F4F7FF;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    /* ── WHY US ── */
+    #why {
+      background: var(--dark);
+      color: #fff;
+    }
+
+    #why .section-title { color: #fff; }
+    #why .section-sub { color: rgba(255,255,255,0.6); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .why-left .section-label { color: var(--yellow); }
+
+    .why-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .why-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+    }
+
+    .why-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+
+    .why-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .why-card h4 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      color: var(--yellow);
+      margin-bottom: 0.4rem;
+    }
+
+    .why-card p { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    .customers-panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+
+    .customers-panel h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      color: var(--yellow);
+      margin-bottom: 1.5rem;
+    }
+
+    .customer-type {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .customer-type:last-child { border-bottom: none; }
+
+    .ct-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .ct-info strong { display: block; font-size: 0.95rem; color: #fff; font-weight: 700; }
+    .ct-info span { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: #fff;
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-info { padding-top: 0.5rem; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .c-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #F4F7FF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .c-label { font-size: 0.82rem; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 1px; }
+    .c-value { font-size: 1rem; font-weight: 700; color: var(--dark); margin-top: 0.15rem; }
+
+    .contact-form {
+      background: #F8FAFF;
+      border-radius: 24px;
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #555;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      border: 2px solid #e8ecf4;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark);
+      background: #fff;
+      transition: border-color 0.25s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+
+    .form-group textarea { min-height: 120px; resize: vertical; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--orange), #e85d04);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,53,0.4); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.5);
+      padding: 2.5rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--yellow);
+      text-decoration: none;
+    }
+
+    footer p { font-size: 0.9rem; }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--yellow); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid,
+      .why-grid,
+      .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .why-features { grid-template-columns: 1fr 1fr; }
+      .about-badge { right: 10px; }
+    }
+
+    @media (max-width: 600px) {
+      nav ul { gap: 0; }
+      nav a { font-size: 0.8rem; padding: 0.4rem 0.6rem; }
+      .nav-logo { font-size: 1.4rem; }
+      .hero-stats { gap: 1.5rem; }
+      .why-features { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">🛝 VR<span>Playground</span></a>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="shape s1"></div>
+    <div class="shape s2"></div>
+    <div class="shape s3"></div>
+    <div class="shape s4"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🇮🇳 Ahmedabad's #1 Playground Equipment Supplier</div>
+      <h1>Building <span class="highlight">Joyful</span> Spaces for Happy Kids</h1>
+      <p>Premium, safe, and durable playground equipment for schools, housing societies, parks, and resorts across Gujarat & India.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+        <a href="#products" class="btn btn-outline">View Products</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Projects Done</span></div>
+        <div class="stat"><span class="stat-num">12+</span><span class="stat-label">Years Experience</span></div>
+        <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Cities Served</span></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Safe & Certified</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-main-box">🛝</div>
+          <div class="about-badge">
+            <strong>ISI</strong>
+            <span>Certified Products</span>
+          </div>
+        </div>
+        <div class="about-text">
+          <p class="section-label">About VR Playground</p>
+          <h2 class="section-title">We Create Playgrounds Children Love & Parents Trust</h2>
+          <p class="section-sub">Based in Ahmedabad, VR Playground Equipment has been designing, manufacturing, and installing world-class playground equipment since 2012. Every product is built with child safety, durability, and fun as our core priorities.</p>
+          <ul class="about-list">
+            <li><span class="check">✓</span> ISI-certified, rust-proof, UV-resistant materials</li>
+            <li><span class="check">✓</span> Custom design & turnkey installation service</li>
+            <li><span class="check">✓</span> After-sales maintenance & warranty support</li>
+            <li><span class="check">✓</span> Registered on GeM Portal for government orders</li>
+            <li><span class="check">✓</span> Serving schools, societies, parks & resorts across Gujarat</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary" style="margin-top:2rem; display:inline-block;">Talk to Us Today</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="container">
+      <div class="products-header">
+        <p class="section-label">Our Products</p>
+        <h2 class="section-title">Equipment for Every Play Space</h2>
+        <p class="section-sub">From classic slides to fully themed adventure zones — we have everything to create the perfect playground.</p>
+      </div>
+      <div class="products-grid">
+        <div class="product-card">
+          <span class="product-emoji">🛝</span>
+          <h3>Slides & Climbers</h3>
+          <p>Wavy, straight, and spiral slides with safe climbing structures in various heights and materials.</p>
+          <span class="product-tag">Best Seller</span>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🔄</span>
+          <h3>Swings & Merry-Go-Rounds</h3>
+          <p>Single, double, and basket swings; rotating merry-go-rounds for toddlers and older kids alike.</p>
+          <span class="product-tag">All Age Groups</span>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🏰</span>
+          <h3>Themed Play Structures</h3>
+          <p>Castle, jungle, ocean, and space-themed multi-play units for housing societies and schools.</p>
+          <span class="product-tag">Custom Design</span>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🏋️</span>
+          <h3>Outdoor Gym Equipment</h3>
+          <p>Open-air fitness stations for parks and residential complexes — healthy for all age groups.</p>
+          <span class="product-tag">Parks & Societies</span>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🛡️</span>
+          <h3>Safety Flooring</h3>
+          <p>Rubber mulch, foam tiles, and artificial turf to ensure safe landings in play areas.</p>
+          <span class="product-tag">Safety First</span>
+        </div>
+        <div class="product-card">
+          <span class="product-emoji">🪑</span>
+          <h3>Park Furniture</h3>
+          <p>Benches, dustbins, planters, and gazebos to complete your park or playground setup.</p>
+          <span class="product-tag">Complete Setup</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-left">
+          <p class="section-label">Why Choose Us</p>
+          <h2 class="section-title">Safety. Quality. Smiles.</h2>
+          <p class="section-sub" style="color:rgba(255,255,255,0.6)">We don't just sell playground equipment — we create safe, inspiring spaces where children thrive and communities come alive.</p>
+          <div class="why-features">
+            <div class="why-card">
+              <span class="why-icon">🔒</span>
+              <h4>100% Safe</h4>
+              <p>Every product meets IS 15494 safety standards for children's play equipment.</p>
+            </div>
+            <div class="why-card">
+              <span class="why-icon">⚙️</span>
+              <h4>Turnkey Service</h4>
+              <p>Design, supply, and installation — we handle everything end to end.</p>
+            </div>
+            <div class="why-card">
+              <span class="why-icon">🌦️</span>
+              <h4>Weather Proof</h4>
+              <p>UV-resistant paint and rust-proof steel withstand harsh Indian weather.</p>
+            </div>
+            <div class="why-card">
+              <span class="why-icon">🛠️</span>
+              <h4>5-Year Warranty</h4>
+              <p>Comprehensive after-sales support and maintenance packages available.</p>
+            </div>
+          </div>
+        </div>
+        <div class="customers-panel">
+          <h3>🎯 Who We Serve</h3>
+          <div class="customer-type">
+            <div class="ct-icon" style="background:#1a3a5c">🏫</div>
+            <div class="ct-info"><strong>Schools & Colleges</strong><span>Primary schools, CBSE/ICSE schools, pre-schools</span></div>
+          </div>
+          <div class="customer-type">
+            <div class="ct-icon" style="background:#1a3a2c">🏘️</div>
+            <div class="ct-info"><strong>Housing Societies</strong><span>Residential complexes, gated communities, RWAs</span></div>
+          </div>
+          <div class="customer-type">
+            <div class="ct-icon" style="background:#3a1a1a">🏛️</div>
+            <div class="ct-info"><strong>Government & Municipal</strong><span>AMC parks, AUDA projects, GeM portal orders</span></div>
+          </div>
+          <div class="customer-type">
+            <div class="ct-icon" style="background:#2a1a3a">🏨</div>
+            <div class="ct-info"><strong>Hotels & Resorts</strong><span>Kid zones, resort play areas, indoor fun zones</span></div>
+          </div>
+          <div class="customer-type">
+            <div class="ct-icon" style="background:#1a2a3a">🏥</div>
+            <div class="ct-info"><strong>Hospitals & NGOs</strong><span>Pediatric play areas, community centers</span></div>
+          </div>
+          <div class="customer-type">
+            <div class="ct-icon" style="background:#2a3a1a">🛒</div>
+            <div class="ct-info"><strong>Malls & Commercial</strong><span>Shopping centers, food courts, family entertainment</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <p class="section-label">Contact Us</p>
+          <h2 class="section-title">Let's Build Something Amazing Together</h2>
+          <p class="section-sub">Get a free site visit, design consultation, and quote — no obligations. We're just a call or message away.</p>
+
+          <div style="margin-top:2.5rem">
+            <div class="contact-item">
+              <div class="c-icon">📞</div>
+              <div>
+                <div class="c-label">Phone / WhatsApp</div>
+                <div class="c-value">+91 9898901172</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon">📧</div>
+              <div>
+                <div class="c-label">Email</div>
+                <div class="c-value">vrenterprise1172@gmail.com</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon">📍</div>
+              <div>
+                <div class="c-label">Address</div>
+                <div class="c-value">G-15 Seventh Parisar,Ahmedabad - 382481 Gujarat</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon">🕐</div>
+              <div>
+                <div class="c-label">Business Hours</div>
+                <div class="c-value">Mon – Sat: 9:00 AM – 7:30 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3 style="font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--dark);margin-bottom:1.5rem">Get a Free Quote 🎉</h3>
+          <form action="#" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" name="name" placeholder="e.g. Prakash Panchal" required>
+              </div>
+              <div class="form-group">
+                <label>Phone / WhatsApp *</label>
+                <input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+              <label>I am a… *</label>
+              <select name="customer_type" required>
+                <option value="">Select customer type</option>
+                <option>School / College</option>
+                <option>Housing Society / RWA</option>
+                <option>Government / Municipal Body</option>
+                <option>Hotel / Resort</option>
+                <option>Hospital / NGO</option>
+                <option>Mall / Commercial Space</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tell us about your project</label>
+              <textarea name="message" placeholder="Size of area, type of equipment needed, location, budget range..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">🚀 Send My Enquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#hero" class="footer-logo">🛝 VR Playground</a>
+      <p>© 2025 VR Playground, Ahmedabad. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
